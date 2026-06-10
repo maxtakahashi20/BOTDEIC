@@ -1,25 +1,245 @@
 {
-  "guildId": "1489293035849384060",
-  "allowedRoleIds": [
-    "1489316402098602066",
-    "1489316892387577877",
-    "1489319949175488522"
+  "guildId": "1190411140363202684",
+  "channels": {
+    "ticketsPanel": ["1501964650177364088", "1473106723874017411"],
+    "ticketsCategory": "1473106416100442337",
+    "ticketsLogs": "1484658154745888979",
+    "contestPanel": "1474791967266308422",
+    "functionalPanel": "1502150152549568582",
+    "functionalRequests": "1501951690264543346",
+    "generalLogs": "1501774159930196058",
+    "announcementsLog": "1495539749736153088"
+  },
+  "roles": {
+    "admin": ["1495605238319550606", "1469111623724699799"],
+    "codeGenerators": ["1495605238319550606", "1469111623724699799"],
+    "contestEvaluators": ["1495605238319550606", "1469111623724699799"],
+    "contestApprovedRole": "1475239223744266290",
+    "functionalApprovers": ["1469111623724699799"],
+    "functionalNotifyRoles": ["1190411480730963968"],
+    "activeFunctionalRole": "1512211416419926166",
+    "ticketStaffGlobal": ["1190411480730963968"],
+    "ticketStaff": {
+      "duvidas": [],
+      "denuncias": [],
+      "recursos_humanos": [],
+      "outros": []
+    }
+  },
+  "ticketCategories": [
+    {
+      "id": "duvidas",
+      "label": "Dúvidas",
+      "description": "Tire dúvidas gerais sobre a instituição, normas e procedimentos.",
+      "emoji": "❓"
+    },
+    {
+      "id": "denuncias",
+      "label": "Denúncias",
+      "description": "Reporte condutas irregulares ou situações que exigem apuração.",
+      "emoji": "🚨"
+    },
+    {
+      "id": "recursos_humanos",
+      "label": "Recursos Humanos",
+      "description": "Assuntos de RH, documentação, escalas e gestão de pessoal.",
+      "emoji": "👥"
+    },
+    {
+      "id": "outros",
+      "label": "Outros",
+      "description": "Demais assuntos que não se enquadram nas categorias acima.",
+      "emoji": "📌"
+    }
   ],
-  "panelChannelId": "1495806978415530165",
-  "requestsChannelId": "1495823091052314775",
-  "onApprove": {
-    "nicknameTemplate": "❯ QPPM | {nome}",
-    "roleIds": [
-      "1489319948269522975",
-      "1489316417101631558",
-      "1489316417852538993",
-      "1489319950668529875",
-      "1489319951260061756",
-      "1489319952044392478",
-      "1489337911575969938",
-      "1492573242521686238",
-      "1489773188039573555",
-      "1489337673071198399"
+  "units": [
+    "DEIC"
+  ],
+  "ranks": [
+    "Perito Criminal",
+    "Aluno",
+    "Papiloscopista",
+    "Escrivão",
+    "Investigador Classe Especial",
+    "Investigador 1ª Classe",
+    "Investigador 2ª Classe",
+    "Investigador 3ª Classe",
+    "Investigador Chefe",
+    "Agente Classe Especial",
+    "Agente 1ª Classe",
+    "Agente 2ª Classe",
+    "Agente 3ª Classe",
+    "Acadepol"
+  ],
+  "functionalForm": {
+    "title": "Solicitar Funcional DEIC"
+  },
+  "unitRoles": {"DEIC": "1193713104559816744"},
+  "rankRoles": {"Perito Criminal": "1441829150192304148", "Aluno": "1512163944398323742", "Papiloscopista": "1474226007190933544", "Escrivão": "1193709697379864597", "Investigador Classe Especial": "1512913487611826206", "Investigador 1ª Classe": "1512913278396010526", "Investigador 2ª Classe": "1193709745949905098", "Investigador 3ª Classe": "1193709745949905098", "Investigador Chefe": "1193709426050334771", "Agente Classe Especial": "1512913214831071394", "Agente 1ª Classe": "1193712547187150898", "Agente 2ª Classe": "1202376583692955759", "Agente 3ª Classe": "1193709974363316376", "Acadepol": "1512211416419926166"},
+  "allowedRoleIds": ["1193713104559816744"],
+  "panels": {
+    "bannerImage": "https://media.discordapp.net/attachments/1514007607268872323/1514275521586921512/0243D514-09A1-40B6-9A03-BE4A6DA138B0.png",
+    "tickets": {
+      "title": "Central de Atendimento",
+      "description": "Selecione a categoria abaixo para abrir um ticket privado com nossa equipe.",
+      "footer": "DEIC | Polícia Civil",
+      "image": null,
+      "thumbnail": null,
+      "color": 5793266
+    },
+    "contest": {
+      "title": "📢 Concurso de Ingresso - DEIC",
+      "subtitle": "FORMULÁRIO DE INSCRIÇÃO — DEIC",
+      "motto": "A DEIC é reservada aos que possuem disciplina, coragem e compromisso.",
+      "instructionsTitle": "Como se inscrever:",
+      "instructions": [
+        "Clique no botão **INSCREVER-SE NO CONCURSO**",
+        "Preencha todas as perguntas do formulário",
+        "Seu formulário será enviado como ticket para avaliação"
+      ],
+      "footer": "DEIC",
+      "image": null,
+      "thumbnail": null,
+      "color": 3447003,
+      "buttonLabel": "INSCREVER-SE NO CONCURSO",
+      "buttonStyle": "Primary"
+    },
+    "functional": {
+      "title": "DEIC | Solicitar funcional",
+      "intro": "• **Solicitar Funcional:** para candidatos aprovados no concurso.\n• **Convite Direto:** para integrantes convidados diretamente pela equipe.\n\nApós enviar seus dados, aguarde a resposta em seu privado.",
+      "requirementsTitle": "É necessário ter em mãos o seu:",
+      "requirements": [
+        "Nome e sobrenome (Na cidade).",
+        "Identificação (ID).",
+        "Autorização do responsável da unidade."
+      ],
+      "footer": "DEIC | Polícia Civil",
+      "image": null,
+      "thumbnail": null,
+      "color": 9807270,
+      "buttonLabel": "SOLICITAR FUNCIONAL DEIC",
+      "buttonEmoji": "🪪",
+      "buttonStyle": "Secondary",
+      "directButtonLabel": "CONVITE DIRETO",
+      "directButtonEmoji": "📨",
+      "directButtonStyle": "Primary"
+    }
+  },
+  "contest": {
+    "formTitle": "Formulário de Inscrição – PCESP | DEIC",
+    "questions": [
+      {
+        "id": "dados_pessoais",
+        "label": "1. Nome completo, idade e ID",
+        "question": "Informe seu nome completo, idade e ID.",
+        "placeholder": "Digite sua resposta aqui.",
+        "style": "paragraph",
+        "required": true,
+        "maxLength": 500
+      },
+      {
+        "id": "sobre_pcesp",
+        "label": "2. Sobre a Polícia Civil",
+        "question": "O que você sabe sobre a Polícia Civil do Estado de São Paulo e qual é a sua principal função?",
+        "placeholder": "Digite sua resposta aqui.",
+        "style": "paragraph",
+        "required": true,
+        "maxLength": 1500
+      },
+      {
+        "id": "sobre_deic",
+        "label": "3. Sobre o DEIC",
+        "question": "O que você sabe sobre o DEIC e quais atividades acredita que a unidade desempenha?",
+        "placeholder": "Digite sua resposta aqui.",
+        "style": "paragraph",
+        "required": true,
+        "maxLength": 1500
+      },
+      {
+        "id": "motivo_ingresso",
+        "label": "4. Motivo de ingresso",
+        "question": "Por qual motivo você deseja ingressar no DEIC?",
+        "placeholder": "Digite sua resposta aqui.",
+        "style": "paragraph",
+        "required": true,
+        "maxLength": 1500
+      },
+      {
+        "id": "caracteristicas_investigador",
+        "label": "5. Perfil do investigador",
+        "question": "Quais características você considera essenciais para um policial investigador?",
+        "placeholder": "Digite sua resposta aqui.",
+        "style": "paragraph",
+        "required": true,
+        "maxLength": 1500
+      },
+      {
+        "id": "ordem_legal",
+        "label": "6. Ordem legal",
+        "question": "Como você reagiria ao receber uma ordem legal que não concorda pessoalmente, mas que faz parte de uma operação da unidade?",
+        "placeholder": "Digite sua resposta aqui.",
+        "style": "paragraph",
+        "required": true,
+        "maxLength": 1500
+      },
+      {
+        "id": "abordagem_suspeito",
+        "label": "7. Abordagem difícil",
+        "question": "Descreva como você lidaria com uma ocorrência em que um suspeito se recusasse a colaborar durante uma abordagem.",
+        "placeholder": "Digite sua resposta aqui.",
+        "style": "paragraph",
+        "required": true,
+        "maxLength": 1500
+      },
+      {
+        "id": "descumprimento_normas",
+        "label": "8. Conduta irregular",
+        "question": "Caso presencie um integrante da corporação descumprindo normas ou procedimentos internos, como agiria?",
+        "placeholder": "Digite sua resposta aqui.",
+        "style": "paragraph",
+        "required": true,
+        "maxLength": 1500
+      },
+      {
+        "id": "disponibilidade",
+        "label": "9. Disponibilidade",
+        "question": "Qual é a sua disponibilidade para atuar na unidade durante a semana e aos finais de semana?",
+        "placeholder": "Digite sua resposta aqui.",
+        "style": "paragraph",
+        "required": true,
+        "maxLength": 1000
+      },
+      {
+        "id": "sobre_voce",
+        "label": "10. Sobre você",
+        "question": "Fale um pouco sobre você, sua experiência em organizações policiais (caso possua) e o que espera alcançar dentro do DEIC.",
+        "placeholder": "Digite sua resposta aqui.",
+        "style": "paragraph",
+        "required": true,
+        "maxLength": 2000
+      }
     ]
-  }
+  },
+  "onContestApprove": {
+    "roleIds": ["1193713104559816744"]
+  },
+  "onFunctionalApprove": {
+    "nicknameTemplate": "{nome} | {id}",
+    "extraRoleIds": [
+      "1193713104559816744"
+    ]
+  },
+  "messages": {
+    "contestSubmitted": "✅ **Candidatura realizada com sucesso!**\n\nAguarde a análise da equipe — você será avisado por DM.",
+    "contestChannelClosing": "🔒 Inscrição finalizada. Este canal será fechado em 10 segundos.",
+    "contestApprovedDm": "✅ **Parabéns! Sua inscrição no concurso foi APROVADA.**\n\nVocê já pode acessar o painel de Solicitação de Funcional.",
+    "contestRejectedDm": "❌ **Sua inscrição no concurso foi REPROVADA.**\n\nAgradecemos seu interesse.",
+    "functionalApprovedDm": "✅ **Sua solicitação de funcional foi APROVADA!**\n\nBem-vindo(a) à instituição.",
+    "functionalRejectedDm": "❌ **Sua solicitação de funcional foi RECUSADA.**\n\nEntre em contato com a administração para mais informações.",
+    "notApprovedForFunctional": "🚫 Você precisa ser **aprovado no concurso** antes de solicitar funcional.",
+    "ticketCreated": "✅ Ticket criado: {channel}",
+    "ticketClosed": "🔒 Este ticket foi encerrado.",
+    "codeInvalid": "❌ Código de autorização inválido ou já utilizado."
+  },
+  "codePrefix": "DEIC"
 }

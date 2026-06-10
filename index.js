@@ -11,9 +11,7 @@ const {
   Routes
 } = require("discord.js");
 
-// Import explícito: em alguns hosts existe `config.json` na raiz e o Node pode
-// resolver `require("./config")` para JSON (sem `loadConfig`). Isso quebra o deploy.
-const { loadConfig } = require("./config/index.js");
+const { loadConfig } = require("./src/config/index.js");
 
 const TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
@@ -24,14 +22,22 @@ if (!CLIENT_ID) throw new Error("DISCORD_CLIENT_ID não definido no .env");
 const config = loadConfig();
 
 const client = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers],
-  partials: [Partials.GuildMember]
+  intents: [
+    GatewayIntentBits.Guilds,
+    GatewayIntentBits.GuildMembers,
+    GatewayIntentBits.GuildMessages,
+    GatewayIntentBits.MessageContent
+  ],
+  partials: [Partials.GuildMember, Partials.Channel, Partials.Message]
 });
 
 client.commands = new Collection();
 client.config = config;
+client.pendingContest = new Map();
+client.pendingFunctional = new Map();
 
 let isShuttingDown = false;
+
 async function shutdown(signal) {
   if (isShuttingDown) return;
   isShuttingDown = true;
@@ -49,7 +55,7 @@ process.once("SIGINT", () => void shutdown("SIGINT"));
 process.once("SIGTERM", () => void shutdown("SIGTERM"));
 
 function loadCommands() {
-  const commandsDir = path.join(__dirname, "commands");
+  const commandsDir = path.join(__dirname, "src", "commands");
   if (!fs.existsSync(commandsDir)) return [];
 
   const files = fs.readdirSync(commandsDir).filter((f) => f.endsWith(".js"));
@@ -71,14 +77,13 @@ function loadCommands() {
 
 async function registerSlashCommands(slashData) {
   const rest = new REST({ version: "10" }).setToken(TOKEN);
-
   await rest.put(Routes.applicationGuildCommands(CLIENT_ID, config.guildId), {
     body: slashData
   });
 }
 
 function loadEvents() {
-  const eventsDir = path.join(__dirname, "events");
+  const eventsDir = path.join(__dirname, "src", "events");
   if (!fs.existsSync(eventsDir)) return;
 
   const files = fs.readdirSync(eventsDir).filter((f) => f.endsWith(".js"));
@@ -98,13 +103,11 @@ function loadEvents() {
   const slashData = loadCommands();
   loadEvents();
 
-  // discord.js v14: 'ready' ainda funciona, mas pode emitir aviso de depreciação
-  // dependendo do runtime. Usamos 'clientReady' quando disponível.
   client.once("clientReady", async () => {
     try {
       await registerSlashCommands(slashData);
       // eslint-disable-next-line no-console
-      console.log(`✅ Logado como ${client.user.tag} e comandos registrados.`);
+      console.log("✅ Slash commands registrados.");
     } catch (err) {
       // eslint-disable-next-line no-console
       console.error("❌ Falha ao registrar slash commands:", err);
@@ -113,4 +116,3 @@ function loadEvents() {
 
   await client.login(TOKEN);
 })();
-

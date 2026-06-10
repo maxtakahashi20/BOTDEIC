@@ -1,7 +1,7 @@
 {
-  "name": "rota-recrutamento-bot",
-  "version": "1.0.0",
-  "description": "Bot Discord para setagem de cargos e apelidos (ROTA) com discord.js v14.",
+  "name": "bot-deic",
+  "version": "2.0.0",
+  "description": "Bot Discord institucional — tickets, concurso, funcional e avisos.",
   "main": "index.js",
   "type": "commonjs",
   "engines": {
@@ -11,7 +11,8 @@
     "start": "node index.js"
   },
   "dependencies": {
-    "discord.js": "^14.22.1",
+    "@supabase/supabase-js": "^2.49.8",
+    "discord.js": "^14.26.4",
     "dotenv": "^16.6.1"
   }
 }
