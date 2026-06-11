@@ -1,4 +1,5 @@
 const { getSupabase } = require("../database/client");
+const { logError } = require("../utils/logger");
 
 function generateCode(prefix = "PM") {
   const chars = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789";
@@ -42,7 +43,7 @@ async function validateAndUseCode(code, usedBy) {
       .maybeSingle();
 
     if (error) {
-      console.error("[validateAndUseCode] select", error);
+      logError("validateAndUseCode:select", error, { code: normalized });
       return { valid: false, row: null };
     }
     if (!row || row.used) return { valid: false, row: null };
@@ -58,13 +59,13 @@ async function validateAndUseCode(code, usedBy) {
       .eq("used", false);
 
     if (updateError) {
-      console.error("[validateAndUseCode] update", updateError);
+      logError("validateAndUseCode:update", updateError, { codeId: row.id, userId: usedBy });
       return { valid: false, row: null };
     }
 
     return { valid: true, row };
   } catch (err) {
-    console.error("[validateAndUseCode]", err);
+    logError("validateAndUseCode", err, { userId: usedBy });
     return { valid: false, row: null };
   }
 }

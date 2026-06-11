@@ -4,6 +4,7 @@ const { validateAndUseCode } = require("./codeService");
 const { isContestApproved } = require("./userService");
 const { logActivity } = require("./logService");
 const { buildNicknameFromTemplate } = require("../utils/nickname");
+const { logError, logExpected, logWarn } = require("../utils/logger");
 
 function buildRequestEmbed(request, user, options = {}) {
   const fields = [
@@ -73,7 +74,7 @@ async function submitFunctionalRequest(guild, config, user, data, options = {}) 
       .single();
 
     if (error) {
-      console.error("[submitFunctionalRequest] insert", error);
+      logError("submitFunctionalRequest:insert", error, { userId: user.id });
       return { ok: false, reason: "db_error" };
     }
 
@@ -81,13 +82,13 @@ async function submitFunctionalRequest(guild, config, user, data, options = {}) 
 
     const channelId = config.channels?.functionalRequests;
     if (!channelId) {
-      console.error("[submitFunctionalRequest] functionalRequests não configurado");
+      logWarn("submitFunctionalRequest", "canal functionalRequests não configurado");
       return { ok: false, reason: "config_error" };
     }
 
     const channel = await guild.channels.fetch(channelId).catch(() => null);
     if (!channel?.isTextBased()) {
-      console.error("[submitFunctionalRequest] canal de solicitações não encontrado");
+      logWarn("submitFunctionalRequest", "canal de solicitações não encontrado", { channelId });
       return { ok: false, reason: "config_error" };
     }
 
@@ -105,7 +106,7 @@ async function submitFunctionalRequest(guild, config, user, data, options = {}) 
       .update({ message_id: msg.id })
       .eq("id", request.id)
       .then(() => {})
-      .catch((err) => console.error("[submitFunctionalRequest] update message_id", err));
+      .catch((err) => logError("submitFunctionalRequest:updateMessageId", err, { requestId: request.id }));
 
     logActivity({
       category: "functional",
@@ -118,7 +119,7 @@ async function submitFunctionalRequest(guild, config, user, data, options = {}) 
         code: codeResult.row.code,
         direct_invite: !!options.skipContestCheck
       }
-    }).catch((err) => console.error("[submitFunctionalRequest] log", err));
+    }).catch((err) => logError("submitFunctionalRequest:log", err, { requestId: request.id }));
 
     logActivity({
       category: "code",
@@ -126,11 +127,11 @@ async function submitFunctionalRequest(guild, config, user, data, options = {}) 
       actorId: user.id,
       targetId: codeResult.row.id,
       details: { code: codeResult.row.code }
-    }).catch((err) => console.error("[submitFunctionalRequest] log code", err));
+    }).catch((err) => logError("submitFunctionalRequest:logCode", err, { codeId: codeResult.row.id }));
 
     return { ok: true, request };
   } catch (err) {
-    console.error("[submitFunctionalRequest]", err);
+    logError("submitFunctionalRequest", err, { userId: user.id });
     return { ok: false, reason: "db_error" };
   }
 }
@@ -170,7 +171,10 @@ async function approveFunctional(client, config, request, reviewer) {
         details: { nickname, template }
       });
     } catch (err) {
-      console.error("[approveFunctional] setNickname", err);
+      logExpected("approveFunctional:setNickname", err, {
+        userId: request.discord_id,
+        nickname
+      });
       if (err?.code === 50013) {
         changes.push(
           "Apelido não alterado: bot sem permissão ou abaixo do membro na hierarquia."

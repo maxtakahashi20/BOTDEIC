@@ -2,6 +2,7 @@ const { isNumericId } = require("../utils/validators");
 const { getModalText, getModalSelectValues } = require("../utils/modalFields");
 const { submitFunctionalRequest } = require("../services/functionalService");
 const { safeDefer } = require("../utils/interaction");
+const { logError } = require("../utils/logger");
 
 module.exports = {
   id: "functional:modal",
@@ -66,7 +67,7 @@ module.exports = {
         "✅ Solicitação enviada com sucesso! Aguarde a análise da equipe — você será avisado por DM."
       );
     } catch (err) {
-      console.error("[functional:modal]", err);
+      logError("functional:modal", err, { userId: interaction.user?.id });
       await interaction.editReply("❌ Erro ao processar o formulário. Tente novamente.").catch(() => {});
     }
   }

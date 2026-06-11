@@ -1,6 +1,7 @@
 const { getTicketById, logTicketAction } = require("../services/ticketService");
 const { getModalText } = require("../utils/modalFields");
 const { safeDefer } = require("../utils/interaction");
+const { logError } = require("../utils/logger");
 
 module.exports = {
   id: "ticket:modal",
@@ -47,7 +48,7 @@ module.exports = {
 
       await interaction.editReply("❌ Ação inválida.");
     } catch (err) {
-      console.error("[ticket:modal]", err);
+      logError("ticket:modal", err, { userId: interaction.user?.id, customId: interaction.customId });
       await interaction.editReply("❌ Erro ao processar. Tente novamente.").catch(() => {});
     }
   }

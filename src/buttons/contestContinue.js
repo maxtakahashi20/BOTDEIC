@@ -1,5 +1,6 @@
 const { buildContestModal } = require("./contestRegister");
 const { chunkArray } = require("../utils/validators");
+const { logError } = require("../utils/logger");
 
 module.exports = {
   id: "contest:continue",
@@ -25,7 +26,7 @@ module.exports = {
     try {
       return await interaction.showModal(buildContestModal(client.config, step));
     } catch (err) {
-      console.error("[contest:continue]", err);
+      logError("contest:continue", err, { userId: interaction.user?.id, step });
       return interaction.reply({
         content: "❌ Não foi possível abrir a próxima etapa. Tente novamente.",
         ephemeral: true

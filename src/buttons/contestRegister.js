@@ -7,6 +7,7 @@ const { LabelBuilder } = require("@discordjs/builders");
 const { getPendingApplication } = require("../services/contestService");
 const { chunkArray } = require("../utils/validators");
 const { splitQuestionForModal } = require("../utils/modalQuestion");
+const { logError } = require("../utils/logger");
 
 function buildContestModal(config, step) {
   const questions = config.contest.questions;
@@ -69,7 +70,7 @@ module.exports = {
     try {
       return await interaction.showModal(buildContestModal(config, 0));
     } catch (err) {
-      console.error("[contest:register]", err);
+      logError("contest:register", err, { userId: interaction.user?.id });
       return interaction.reply({
         content: "❌ Não foi possível abrir o formulário. Tente novamente.",
         ephemeral: true

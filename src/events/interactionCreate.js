@@ -1,6 +1,7 @@
 const path = require("node:path");
 const { loadNestedHandlers } = require("../utils/loader");
 const { safeReply } = require("../utils/interaction");
+const { logError } = require("../utils/logger");
 
 const buttons = loadNestedHandlers(path.join(__dirname, "..", "buttons"), (mod) => {
   if (!mod.id || typeof mod.execute !== "function") return null;
@@ -43,7 +44,7 @@ async function handleSlashCommand(client, interaction) {
         ephemeral: true
       });
     }
-    console.error("[SLASH]", err);
+    logError("SLASH", err, { command: interaction.commandName, userId: interaction.user?.id });
     return safeReply(interaction, {
       content: "❌ Ocorreu um erro ao executar o comando.",
       ephemeral: true
@@ -75,7 +76,11 @@ module.exports = {
         if (handler) return handler(client, interaction);
       }
     } catch (err) {
-      console.error("[interactionCreate]", err);
+      logError("interactionCreate", err, {
+        type: interaction.type,
+        customId: interaction.customId,
+        userId: interaction.user?.id
+      });
       const payload = {
         content: "❌ Ocorreu um erro ao processar sua interação.",
         ephemeral: true

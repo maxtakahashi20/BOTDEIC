@@ -3,6 +3,7 @@ const { chunkArray } = require("../utils/validators");
 const { createApplicationTicket } = require("../services/contestService");
 const { getModalText } = require("../utils/modalFields");
 const { safeDefer } = require("../utils/interaction");
+const { logError } = require("../utils/logger");
 
 module.exports = {
   id: "contest:modal",
@@ -58,7 +59,7 @@ module.exports = {
           "✅ **Candidatura realizada com sucesso!**\n\nAguarde a análise da equipe — você será avisado por DM."
       );
     } catch (err) {
-      console.error("[contest:modal]", err);
+      logError("contest:modal", err, { userId: interaction.user?.id, step });
       await interaction.editReply("❌ Erro ao registrar inscrição. Tente novamente.").catch(() => {});
     }
   }

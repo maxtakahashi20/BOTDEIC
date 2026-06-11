@@ -12,6 +12,7 @@ const {
 } = require("discord.js");
 
 const { loadConfig } = require("./src/config/index.js");
+const { logError } = require("./src/utils/logger");
 
 const TOKEN = process.env.DISCORD_TOKEN;
 const CLIENT_ID = process.env.DISCORD_CLIENT_ID;
@@ -109,8 +110,7 @@ function loadEvents() {
       // eslint-disable-next-line no-console
       console.log("✅ Slash commands registrados.");
     } catch (err) {
-      // eslint-disable-next-line no-console
-      console.error("❌ Falha ao registrar slash commands:", err);
+      logError("registerSlashCommands", err, { guildId: config.guildId });
     }
   });
 

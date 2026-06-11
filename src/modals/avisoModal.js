@@ -3,6 +3,7 @@ const { getSupabase } = require("../database/client");
 const { logAndNotify } = require("../services/logService");
 const { isAdmin } = require("../utils/permissions");
 const { safeDefer } = require("../utils/interaction");
+const { logError } = require("../utils/logger");
 
 const MENTION_MAP = {
   everyone: (content) => ({ content: `@everyone\n${content}`, type: "everyone" }),
@@ -74,7 +75,7 @@ module.exports = {
 
       await interaction.editReply(`✅ Aviso enviado em <#${channelId}>.`);
     } catch (err) {
-      console.error("[aviso:modal]", err);
+      logError("aviso:modal", err, { userId: interaction.user?.id });
       await interaction.editReply("❌ Erro ao enviar aviso.").catch(() => {});
     }
   }

@@ -1,4 +1,5 @@
 const { getOpenTicketByUser, createTicket } = require("../services/ticketService");
+const { logError } = require("../utils/logger");
 
 module.exports = {
   id: "ticket:category",
@@ -24,7 +25,7 @@ module.exports = {
       );
       await interaction.editReply(msg);
     } catch (err) {
-      console.error("[ticket:category]", err);
+      logError("ticket:category", err, { userId: interaction.user?.id, category });
       await interaction.editReply("❌ Não foi possível criar o ticket. Verifique a configuração.");
     }
   }

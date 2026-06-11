@@ -2,6 +2,7 @@ const { EmbedBuilder } = require("discord.js");
 const { getRequestById, rejectFunctional } = require("../services/functionalService");
 const { logAndNotify } = require("../services/logService");
 const { safeDefer } = require("../utils/interaction");
+const { logError } = require("../utils/logger");
 
 module.exports = {
   id: "functional:modal:reject",
@@ -51,7 +52,7 @@ module.exports = {
 
       await interaction.editReply(`❌ Solicitação recusada para <@${request.discord_id}>.`);
     } catch (err) {
-      console.error("[functional:modal:reject]", err);
+      logError("functional:modal:reject", err, { userId: interaction.user?.id });
       await interaction.editReply("❌ Erro ao recusar solicitação.").catch(() => {});
     }
   }
