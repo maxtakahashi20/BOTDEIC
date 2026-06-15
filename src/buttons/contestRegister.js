@@ -91,13 +91,13 @@ module.exports = {
         interaction.user.id
       );
 
-      // if (pending) {
-      //   return interaction.reply({
-      //     content:
-      //       "⚠️ Você já possui uma inscrição pendente de análise.",
-      //     ephemeral: true
-      //   });
-      // }
+      if (pending) {
+        return interaction.reply({
+          content:
+            "⚠️ Você já possui uma inscrição pendente de análise.",
+          ephemeral: true
+        });
+      }
 
       if (!interaction.member) {
         return interaction.reply({
