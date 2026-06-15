@@ -14,7 +14,10 @@ module.exports = {
     const chunks = chunkArray(questions, 5);
 
     if (!client.pendingContest) client.pendingContest = new Map();
-    const session = client.pendingContest.get(interaction.user.id) ?? { answers: {}, step: 0 };
+    const session = client.pendingContest.get(interaction.user.id) ?? {
+      answers: {},
+      step: 0,
+    };
 
     const chunk = chunks[step] ?? [];
     for (const q of chunk) {
@@ -24,7 +27,10 @@ module.exports = {
     const nextStep = step + 1;
 
     if (nextStep < chunks.length) {
-      client.pendingContest.set(interaction.user.id, { ...session, step: nextStep });
+      client.pendingContest.set(interaction.user.id, {
+        ...session,
+        step: nextStep,
+      });
 
       return interaction.reply({
         content:
@@ -36,10 +42,10 @@ module.exports = {
               .setCustomId(`contest:continue:${nextStep}`)
               .setLabel(`Continuar (${nextStep + 1}/${chunks.length})`)
               .setStyle(ButtonStyle.Primary)
-              .setEmoji("➡️")
-          )
+              .setEmoji("➡️"),
+          ),
         ],
-        ephemeral: true
+        ephemeral: true,
       });
     }
 
@@ -47,20 +53,33 @@ module.exports = {
     await safeDefer(interaction, true);
 
     try {
-      await createApplicationTicket(
+      const application = await createApplicationTicket(
         interaction.guild,
         config,
         interaction.user,
-        session.answers
+        session.answers,
       );
 
+      const ticketMention = `<#${application.channel.id}>`;
+
       await interaction.editReply(
-        config.messages?.contestSubmitted ??
-          "✅ **Candidatura realizada com sucesso!**\n\nAguarde a análise da equipe — você será avisado por DM."
+        `✅ **Candidatura realizada com sucesso!**
+
+📋 Sua inscrição foi registrada e enviada para análise da equipe.
+
+🎫 Acompanhe o andamento da sua candidatura através do ticket:
+
+${ticketMention}
+
+⚠️ Mantenha este ticket aberto e fique atento às mensagens da equipe avaliadora.
+
+🔔 Todas as atualizações sobre aprovação, reprovação ou solicitações adicionais serão realizadas por meio deste canal.`,
       );
     } catch (err) {
       logError("contest:modal", err, { userId: interaction.user?.id, step });
-      await interaction.editReply("❌ Erro ao registrar inscrição. Tente novamente.").catch(() => {});
+      await interaction
+        .editReply("❌ Erro ao registrar inscrição. Tente novamente.")
+        .catch(() => {});
     }
-  }
+  },
 };
